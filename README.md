@@ -1,73 +1,65 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# ToDo лист с использованием NestJS и PostgreSQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Реализовать API для работы с `ToDo листом` с возможностью разбивать задачи по группам. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+В качестве БД использовать `PostgreSQL`.
 
-## Description
+***Сущность `Task` (задача) должна содержать следующие поля:***
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Поле                        | Обязательность|
+|-----------------------------|---------------|
+| Идентификатор задачи|*|
+| Имя|*|
+| Описание||
+| Флаг завершенности||
+| Идентификатор группы||
+| Дата создания в формате ISO-8601 (автогенерация)|*|
+| Дата обновления в формате ISO-8601 (автогенерация)||
 
-## Installation
 
-```bash
-$ npm install
-```
+***Сущность `Group` (группа) должна содержать следующие поля:***
+| Поле                        | Обязательность|
+|-----------------------------|---------------|
+| Идентификатор группы|*|
+| Имя|*|
+| Описание||
+| Дата создания в формате ISO-8601 (автогенерация)|*|
+| Дата обновления в формате ISO-8601 (автогенерация)||
 
-## Running the app
 
-```bash
-# development
-$ npm run start
+***Список методов:***
+|   | Endpoint                    |Параметры| Описание|
+|---|-----------------------------|---------|----------|
+|Группы|||
+|| GET /groups||Получение только списка групп без задач|
+|| GET /groups/{id}||Получение группы с задачами|
+|| POST /groups|`Имя`, `Описание`|Создание группы||
+|| PATCH /groups/{id}|`Имя`, `Описание`|Изменение группы|
+|| DELETE /groups/{id}||Удаление группы и всех задач в ней|
+|| ** <br/> GET /groups?extends=true|query-параметр `extends`|Если `true` - Получение списка групп с задачами|
+|Задачи|||
+|| GET /tasks||Получение всех задач (с группами в которые они входят (если есть))|
+|| GET /tasks/{id}||Получение задачи|
+|| POST /tasks|`Имя`, `Описание`|Создание задачи|
+|| PATCH /tasks/{id}|`Имя`, `Описание`|Изменение задачи|
+|| PATCH /tasks/{id}/done|`Флаг завершенности`|Проставить флаг завершенности для задачи|
+|| DELETE /tasks/{id}||Удаление задачи|
 
-# watch mode
-$ npm run start:dev
+** - **Не обязательный endpoint, если останется время**
 
-# production mode
-$ npm run start:prod
-```
+***Валидации***
 
-## Test
+Для создания/изменения `задач/групп` должны приниматься (whitelist) только параметры `Имя` и `Описание`.
 
-```bash
-# unit tests
-$ npm run test
+`Имя` - обязательно, только строка и не должно превышать 64 символов. 
 
-# e2e tests
-$ npm run test:e2e
+`Описание` - если есть, то только строка и не должно превышать 256 символов.
 
-# test coverage
-$ npm run test:cov
-```
+Для изменения `флага завершенности` должен приниматься только параметр `Флаг завершенности`.
 
-## Support
+`флаг завершенности` - обязательно, только `Boolean`. 
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+***Результат***
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Задание оформить в виде репозитория с `README.md` в котором будут шаги запуска.
