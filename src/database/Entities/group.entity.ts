@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Task } from './task.entity';
 
 @Entity()
@@ -10,16 +19,16 @@ export class Group {
   name: string;
 
   @Column({
-    type: "text",
+    type: 'text',
     nullable: true,
   })
   description: string;
 
   @OneToMany(() => Task, (task) => task.group)
-  tasks: Task[]
+  tasks: Task[];
 
   @CreateDateColumn({
-    type: 'timestamptz'
+    type: 'timestamptz',
   })
   createdAt: Date;
 

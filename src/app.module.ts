@@ -5,14 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseProviders } from './database/database.providers';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot()
-  ],
+  imports: [ConfigModule.forRoot()],
   exports: [...databaseProviders],
   controllers: [AppController],
-  providers: [
-    AppService,
-    ...databaseProviders
-  ],
+  providers: [AppService, ...databaseProviders],
 })
 export class AppModule {}

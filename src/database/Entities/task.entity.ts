@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Group } from './group.entity';
 
 @Entity()
@@ -10,20 +18,20 @@ export class Task {
   name: string;
 
   @Column({
-    type: "text",
+    type: 'text',
     nullable: true,
   })
   description: string;
 
-  @Column({ default: false, type: "boolean" })
+  @Column({ default: false, type: 'boolean' })
   done: boolean;
 
   @ManyToOne(() => Group, (group) => group.tasks)
-  @JoinColumn({ name: "groupId" })
-  group: Group
+  @JoinColumn({ name: 'groupId' })
+  group: Group;
 
   @CreateDateColumn({
-    type: 'timestamptz'
+    type: 'timestamptz',
   })
   createdAt: Date;
 
