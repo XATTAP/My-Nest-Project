@@ -9,7 +9,7 @@ import {
 import { Task } from './task.entity';
 
 @Entity({
-  name: "Groups"
+  name: 'Groups',
 })
 export class Group {
   @PrimaryGeneratedColumn()
@@ -25,7 +25,7 @@ export class Group {
   description: string;
 
   @OneToMany(() => Task, (task) => task.group, {
-    cascade: true
+    cascade: true,
   })
   tasks: Task[];
 

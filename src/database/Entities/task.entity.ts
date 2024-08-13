@@ -10,7 +10,7 @@ import {
 import { Group } from './group.entity';
 
 @Entity({
-  name: "Tasks"
+  name: 'Tasks',
 })
 export class Task {
   @PrimaryGeneratedColumn()
@@ -30,7 +30,7 @@ export class Task {
 
   @ManyToOne(() => Group, (group) => group.tasks, {
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'groupId' })
   group: Group;
