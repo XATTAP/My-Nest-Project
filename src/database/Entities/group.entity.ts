@@ -8,7 +8,9 @@ import {
 } from 'typeorm';
 import { Task } from './task.entity';
 
-@Entity()
+@Entity({
+  name: "Groups"
+})
 export class Group {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,7 +24,9 @@ export class Group {
   })
   description: string;
 
-  @OneToMany(() => Task, (task) => task.group)
+  @OneToMany(() => Task, (task) => task.group, {
+    cascade: true
+  })
   tasks: Task[];
 
   @CreateDateColumn({

@@ -9,7 +9,9 @@ import {
 } from 'typeorm';
 import { Group } from './group.entity';
 
-@Entity()
+@Entity({
+  name: "Tasks"
+})
 export class Task {
   @PrimaryGeneratedColumn()
   id: number;
@@ -26,7 +28,10 @@ export class Task {
   @Column({ default: false, type: 'boolean' })
   done: boolean;
 
-  @ManyToOne(() => Group, (group) => group.tasks)
+  @ManyToOne(() => Group, (group) => group.tasks, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  })
   @JoinColumn({ name: 'groupId' })
   group: Group;
 
