@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Task } from './task.entity';
+import { Task } from '@/src/database/Entities/task.entity';
 
 @Entity({
   name: 'Groups',

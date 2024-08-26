@@ -10,8 +10,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { GroupService } from './groups.service';
-import { CreateGroupDto, PatchGroupDto } from './dtos/groupDto';
+import { GroupService } from '@/src/groups/groups.service';
+import { CreateGroupDto, PatchGroupDto } from '@/src/groups/dtos/groupDto';
 
 @Controller('groups')
 export class GroupController {

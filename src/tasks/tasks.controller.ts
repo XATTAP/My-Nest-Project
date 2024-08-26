@@ -8,8 +8,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { TaskService } from './tasks.service';
-import { CreateTaskDto, DoTaskDto, PatchTaskDto } from './dtos/taskDto';
+import { TaskService } from '@/src/tasks/tasks.service';
+import { CreateTaskDto, DoTaskDto, PatchTaskDto } from '@/src/tasks/dtos/taskDto';
 
 @Controller('tasks')
 export class TaskController {

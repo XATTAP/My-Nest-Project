@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Group } from './group.entity';
+import { Group } from '@/src/database/Entities/group.entity';
 
 @Entity({
   name: 'Tasks',
