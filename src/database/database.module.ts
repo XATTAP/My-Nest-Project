@@ -1,11 +1,10 @@
-import { DataSource } from 'typeorm';
 import { Global, Module } from '@nestjs/common';
 import { databaseProviders } from './database.providers';
 
-@Global() // makes the module available globally for other modules once imported in the app modules
+@Global()
 @Module({
   imports: [],
   providers: [...databaseProviders],
-  exports: [DataSource],
+  exports: [...databaseProviders],
 })
 export class TypeOrmModule {}
