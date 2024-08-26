@@ -6,8 +6,8 @@ import {
   Param,
   ParseBoolPipe,
   ParseIntPipe,
+  Patch,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import { GroupService } from './groups.service';
@@ -32,7 +32,7 @@ export class GroupController {
     return this.groupsService.createGroup(body);
   }
 
-  @Put(':id')
+  @Patch(':id')
   patchGroup(
     @Body() body: PatchGroupDto,
     @Param('id', ParseIntPipe) id: number,
