@@ -15,11 +15,15 @@ export class Group {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 64,
+  })
   name: string;
 
   @Column({
-    type: 'text',
+    type: 'varchar',
+    length: 256,
     nullable: true,
   })
   description: string;
