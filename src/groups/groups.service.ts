@@ -11,8 +11,10 @@ export class GroupService {
     private readonly groupRepository: Repository<Group>,
   ) {}
 
-  async findAll(): Promise<Group[]> {
-    return await this.groupRepository.find();
+  async findAll(queryExtend?: boolean): Promise<Group[]> {
+    if (queryExtend)
+      return await this.groupRepository.find({ relations: { tasks: true } });
+    else return await this.groupRepository.find();
   }
 
   async findById(id: number): Promise<Group> {
@@ -31,13 +33,13 @@ export class GroupService {
   }
 
   async patchGroup(groupId: number, body: PatchGroupDto) {
-    const group = await this.findById(groupId)
+    const group = await this.findById(groupId);
 
-    return await this.groupRepository.save({id: group.id, ...body});
+    return await this.groupRepository.save({ id: group.id, ...body });
   }
-  
+
   async deleteGroup(groupId: number) {
-    const group = await this.findById(groupId)
+    const group = await this.findById(groupId);
 
     return await this.groupRepository.delete(group.id);
   }

@@ -4,21 +4,22 @@ import {
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
-  Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { GroupService } from './groups.service';
 import { CreateGroupDto, PatchGroupDto } from './dtos/groupDto';
 
 @Controller('groups')
 export class GroupController {
-  constructor(private readonly groupsService: GroupService) { }
+  constructor(private readonly groupsService: GroupService) {}
 
   @Get()
-  findAll() {
-    return this.groupsService.findAll();
+  findAll(@Query('extends', ParseBoolPipe) queryExtend: boolean) {
+    return this.groupsService.findAll(queryExtend);
   }
 
   @Get(':id')
@@ -32,7 +33,10 @@ export class GroupController {
   }
 
   @Put(':id')
-  patchGroup(@Body() body: PatchGroupDto, @Param('id', ParseIntPipe) id: number) {
+  patchGroup(
+    @Body() body: PatchGroupDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
     return this.groupsService.patchGroup(id, body);
   }
 
