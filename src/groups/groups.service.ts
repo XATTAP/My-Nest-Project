@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Group } from 'src/database/Entities/group.entity';
+import { CreateGroupDto, PatchGroupDto } from './dtos/groupDto';
 
 @Injectable()
 export class GroupService {
@@ -23,5 +24,21 @@ export class GroupService {
       throw new NotFoundException({ message: 'Группа не найдена' });
     }
     return group;
+  }
+
+  async createGroup(body: CreateGroupDto) {
+    return await this.groupRepository.save(body);
+  }
+
+  async patchGroup(groupId: number, body: PatchGroupDto) {
+    const group = await this.findById(groupId)
+
+    return await this.groupRepository.save({id: group.id, ...body});
+  }
+  
+  async deleteGroup(groupId: number) {
+    const group = await this.findById(groupId)
+
+    return await this.groupRepository.delete(group.id);
   }
 }
