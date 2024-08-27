@@ -18,7 +18,10 @@ export class GroupController {
   constructor(private readonly groupsService: GroupService) {}
 
   @Get()
-  findAll(@Query('extends', new ParseBoolPipe({ optional: true })) queryExtend?: boolean) {
+  findAll(
+    @Query('extends', new ParseBoolPipe({ optional: true }))
+    queryExtend?: boolean,
+  ) {
     return this.groupsService.findAll(queryExtend);
   }
 
