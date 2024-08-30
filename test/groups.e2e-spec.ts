@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '@/src/app.module';
+import { testDatabaseProvider } from '@/test/config/test.database.provider';
+import { DataSource } from 'typeorm';
 
 describe('GroupController (e2e)', () => {
   let app: INestApplication;
@@ -9,14 +11,13 @@ describe('GroupController (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(DataSource)
+      .useFactory(testDatabaseProvider)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
-  });
-
-  afterAll(async () => {
-    await app.close();
   });
 
   describe('(GET) /groups/', () => {
